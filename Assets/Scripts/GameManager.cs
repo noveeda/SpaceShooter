@@ -6,16 +6,13 @@ public class GameManager : MonoBehaviour
     public Player player;
     public Queue<GameObject> bulletPool;
 
-
+    public bool isShooting;
 
     [SerializeField]
     private GameObject bulletPrefab;
 
     [SerializeField]
     private int bulletCount = 30;
-
-    
-    
     
     private static GameManager _instance;
     public static GameManager Instance
@@ -42,9 +39,9 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        bulletPool = new Queue<GameObject>();
         for(int i = 0; i < bulletCount; i++)
         {
-            bulletPool = new Queue<GameObject>();
             GameObject obj = Instantiate<GameObject>(bulletPrefab);
             obj.SetActive(false);
             bulletPool.Enqueue(obj);
@@ -60,7 +57,7 @@ public class GameManager : MonoBehaviour
 
     public void InputPool(GameObject obj)
     {
-        obj.SetActive(false);
+        obj.SetActive(isShooting);
         bulletPool.Enqueue(obj);
     }
 
